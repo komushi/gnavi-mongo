@@ -1,0 +1,24 @@
+{
+  "name": "angular-gnavi-express",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Analytics for public Rest data source",
+  "repository": "http://komushi.github.io/angular-gnavi-express/",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.0.0",
+    "request": "^2.39.0",
+    "bower": "^1.3.1"
+  },
+  "scripts": {
+    "postinstall": "bower install --allow-root",
+
+    "prestart": "npm install",
+    "start": "node ./server/server.js",
+
+
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update"
+    
+  }
+}

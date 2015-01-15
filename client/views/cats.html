@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p><strong>Page:</strong> {{tableParams.page()}}</p>
+        <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
+        
+        <table ng-table="tableParams" class="table">
+        <tr ng-repeat="cat in $data">
+            <td data-title="'Code'">{{cat.category_l_code}}</td>
+            <td data-title="'Name'">{{cat.category_l_name}}</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p><strong>カテゴリ別</strong></p>
+        <div>
+            <nvd3-pie-chart
+                data="model.catCountList"
+                id="catCountId"
+                width="550"
+                height="500"
+                x="xFunction()"
+                y="yFunction()"
+                showLabels="true"
+                pieLabelsOutside="true"
+                showValues="true"
+                labelType="key"
+                tooltips="true">
+                    <svg></svg>
+            </nvd3-pie-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

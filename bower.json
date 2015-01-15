@@ -1,0 +1,15 @@
+{
+  "name": "angular-gnavi-express",
+  "version": "0.0.0",
+  "description": "Analytics for public Rest data source",
+  "homepage": "http://komushi.github.io/angular-gnavi-express/",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "bootstrap": "~3.2.0",
+    "ng-table": "~0.3.3",
+    "angularjs-nvd3-directives": "~0.0.7"
+  }
+}
