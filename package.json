@@ -14,14 +14,6 @@
     "cfenv":"1.0.x"    
   },
   "scripts": {
-    "postinstall": "bower install --allow-root",
-
-    "prestart": "npm install",
-    "start": "node ./server/nodeapp.js",
-
-
-    "preupdate-webdriver": "npm install",
-    "update-webdriver": "webdriver-manager update"
-    
+    "start": "node ./server/nodeapp.js"
   }
 }
