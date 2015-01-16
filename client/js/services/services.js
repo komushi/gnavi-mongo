@@ -14,6 +14,13 @@ var gnaviAPIservice = function($injectHttp, $injectQ) {
       });
     };
 
+    gnaviAPI.getCountGroupByArea = function() {
+      return $http({
+        method: 'GET', 
+        url: '/getCountGroupByArea'
+      });
+    };
+
     gnaviAPI.getAreas = function() {
       var deferred = $q.defer();
       var uri = '/getGnaviAreas';

@@ -45,10 +45,41 @@ var getGnaviPrefs = function(db) {
     }
     else 
     {
-      console.log("found");
+      console.log("prefectureList found");
       d.resolve(prefectureList);
 
     }
+  });
+
+  return d.promise;
+};
+
+var getCountGroupByArea = function(db) {
+  var d = Q.defer();
+
+
+  db.gnavi.group(
+    {
+      keyf: function(doc) {
+                 return { area_code: doc.code.areacode, area_name: doc.code.areaname };
+             },
+      reduce: function( curr, result ) {
+                 result.count++;
+             },
+      initial: { count: 0 }
+    },
+    function(err, areaCountList) {
+      if(err || !areaCountList) 
+      {
+        console.log("err: " + err);
+        d.reject(new Error(err));
+      }
+      else 
+      {
+        console.log("areaCountList found");
+        d.resolve(areaCountList);
+
+      }
   });
 
   return d.promise;
@@ -81,22 +112,39 @@ app.get('/getGnaviPrefs', function (req, res) {
 
 });
 
-app.get('/getGnaviAreas', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/AreaSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+app.get('/getCountGroupByArea', function (req, res) {
+  
+  var mongojs = require('mongojs');
+  var db = mongojs(uri, ["gnavi"]);
 
+  getCountGroupByArea(db)
+    .then(function(areaCountList) {
       res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
+      res.send(areaCountList);
+    })
+    .done(function() {
+      console.log("close");
+      db.close();
+    });
 
-    }
-  })
 });
+
+// app.get('/getGnaviAreas', function (req, res) {
+//   var url = "http://api.gnavi.co.jp/ver1/AreaSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
+//   request(url, function (error, response, body) {
+//     if (!error && response.statusCode == 200) {
+
+//       res.set('Content-Type', 'application/json');
+//       res.send(body);
+//     }
+//     else
+//     {
+//       console.log(response.statusCode);
+//       console.log(error);
+
+//     }
+//   })
+// });
 
 app.get('/getGnaviCats', function (req, res) {
   var url = "http://api.gnavi.co.jp/ver1/CategoryLargeSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
