@@ -1,8 +1,8 @@
 {
-  "name": "angular-gnavi-express",
-  "version": "0.0.0",
+  "name": "gnavi-mongo",
+  "version": "1.0.0",
   "description": "Analytics for public Rest data source",
-  "homepage": "http://komushi.github.io/angular-gnavi-express/",
+  "homepage": "http://komushi.github.io/gnavi-mongo/",
   "license": "MIT",
   "private": true,
   "dependencies": {

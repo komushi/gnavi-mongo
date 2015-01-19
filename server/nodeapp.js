@@ -20,16 +20,16 @@ var allowCrossDomain = function(req, res, next) {
 
 var getMongoUri = function() {
 
-  return "mongodb://CloudFoundry_ids0og1r_hlaug1jk_6l8hvfn8:ji2HOfQbTjqXHo-pfEO6St0a_4sPZwp0@ds031601.mongolab.com:31601/CloudFoundry_ids0og1r_hlaug1jk";
+  // return "mongodb://CloudFoundry_ids0og1r_hlaug1jk_6l8hvfn8:ji2HOfQbTjqXHo-pfEO6St0a_4sPZwp0@ds031601.mongolab.com:31601/CloudFoundry_ids0og1r_hlaug1jk";
 
-  // var cfenv = require("cfenv");
-  // var appEnv = cfenv.getAppEnv();
-  // var services = appEnv.getServices();
-  // console.log("services:" + JSON.stringify(services));
-  // var myservice = appEnv.getService("gnavi_mongo");
-  // var credentials = myservice.credentials;
-  // console.log("credentials:" + credentials);
-  // return credentials.uri;
+  var cfenv = require("cfenv");
+  var appEnv = cfenv.getAppEnv();
+  var services = appEnv.getServices();
+  console.log("services:" + JSON.stringify(services));
+  var myservice = appEnv.getService("gnavi_mongo");
+  var credentials = myservice.credentials;
+  console.log("credentials:" + credentials);
+  return credentials.uri;
 
 };
 
