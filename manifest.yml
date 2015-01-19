@@ -1,6 +1,6 @@
 ---
 applications:
-- name: gnavi-mongo
+- name: gnavi-mongo-no-group-count
 memory: 512M
 instances: 1
-host: gnavi-mongo-${random-word}
+host: gnavi-mongo
