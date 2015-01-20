@@ -60,6 +60,8 @@ angular.module('gnaviApp').
         });
 
         model.chartData.push(series);
+        console.info("model.chartData");
+        console.log(JSON.stringify(model.chartData));
       });
     };
 
@@ -70,12 +72,11 @@ angular.module('gnaviApp').
     };
 
     var changeSelectionArea = function(data, selected) {
-        // console.info("data");
-        // console.info(data);
+        console.info("data");
+        console.info(data);
         // console.info("selected");
         // console.info(selected);
 
-        // console.log(model.chartData);
 
         if (selected)
         {
@@ -92,9 +93,19 @@ angular.module('gnaviApp').
 
           });          
         }
+
+
+
     };
 
     var changeSelectionCat = function(data, selected) {
+        console.info("data");
+        console.info(data);
+        // console.info("selected");
+        // console.info(selected);
+
+        console.info("model.chartData");
+        console.log(JSON.stringify(model.chartData));
 
         // if (selected)
         // {

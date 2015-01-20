@@ -34,21 +34,21 @@ app.use(express.static(path.join(application_root, "../client")));
 var uri;
 var getMongoUri = function() {
 
-  // return "mongodb://CloudFoundry_ids0og1r_hlaug1jk_6l8hvfn8:ji2HOfQbTjqXHo-pfEO6St0a_4sPZwp0@ds031601.mongolab.com:31601/CloudFoundry_ids0og1r_hlaug1jk";
+  return "mongodb://CloudFoundry_ids0og1r_hlaug1jk_6l8hvfn8:ji2HOfQbTjqXHo-pfEO6St0a_4sPZwp0@ds031601.mongolab.com:31601/CloudFoundry_ids0og1r_hlaug1jk";
 
-  if (!uri)
-  {
-    var cfenv = require("cfenv");
-    var appEnv = cfenv.getAppEnv();
-    var services = appEnv.getServices();
-    console.log("services:" + JSON.stringify(services));
-    var myservice = appEnv.getService("gnavi_mongo");
-    var credentials = myservice.credentials;
-    console.log("credentials:" + credentials);
-    uri = credentials.uri;
-  }
+  // if (!uri)
+  // {
+  //   var cfenv = require("cfenv");
+  //   var appEnv = cfenv.getAppEnv();
+  //   var services = appEnv.getServices();
+  //   // console.log("services:" + JSON.stringify(services));
+  //   var myservice = appEnv.getService("gnavi_mongo");
+  //   var credentials = myservice.credentials;
+  //   // console.log("credentials:" + credentials);
+  //   uri = credentials.uri;
+  // }
   
-  return uri;
+  // return uri;
 };
 /* get mongodb uri */
 /**************************/
@@ -309,9 +309,94 @@ var getCountByCatList = function(db, catList) {
 /* REST API getCountByCat */
 /**************************/
 
+/**************************/
+/* REST API getCountByCat */
+app.get('/api/addIndex', function (req, res) {
+  console.log("Begin: /api/addIndex");
+  var mongojs = require('mongojs');
+  var db = mongojs(getMongoUri(), ["gnavi"]);
+
+  db.gnavi.ensureIndex( {"code.areacode": 1}, {name: "areacode"} );
+
+  db.gnavi.ensureIndex( {"code.category_code_l.0": 1}, {name: "category_code_l"} );
+
+  db.gnavi.ensureIndex( {"code.areacode": 1, "code.areaname": 1}, {name: "areacode_areaname"} );
+
+  console.log("End: /api/addIndex");
+
+
+});
+
+app.get('/api/dropIndex', function (req, res) {
+  console.log("Begin: /api/dropIndex");
+  var mongojs = require('mongojs');
+  var db = mongojs(getMongoUri(), ["gnavi"]);
+
+  db.gnavi.dropIndexes();
+
+  console.log("End: /api/dropIndex");
+
+
+});
+/* REST API getCountByCat */
+/**************************/
+
+/* tmp */
+app.get('/getGnaviRestByAreaCat', function (req, res) {
+  var url = "http://api.gnavi.co.jp/ver1/RestSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&category_l=" + req.query.category_l + "&area=" + req.query.area + "&hit_per_page=1&format=json";
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+
+      res.set('Content-Type', 'application/json');
+      res.send(body);
+    }
+    else
+    {
+      console.log(response.statusCode);
+      console.log(error);
+
+    }
+  })
+});
+
+app.get('/getGnaviAreas', function (req, res) {
+  var url = "http://api.gnavi.co.jp/ver1/AreaSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+
+      res.set('Content-Type', 'application/json');
+      res.send(body);
+    }
+    else
+    {
+      console.log(response.statusCode);
+      console.log(error);
+
+    }
+  })
+});
+
+app.get('/getGnaviCats', function (req, res) {
+  var url = "http://api.gnavi.co.jp/ver1/CategoryLargeSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+
+      res.set('Content-Type', 'application/json');
+      res.send(body);
+    }
+    else
+    {
+      console.log(response.statusCode);
+      console.log(error);
+
+    }
+  })
+});
+/* tmp */
 
 /* group by */
 // var getCountGroupByArea = function(db) {
+
 //   var d = Q.defer();
 
 
@@ -344,12 +429,15 @@ var getCountByCatList = function(db, catList) {
 // };
 
 // app.get('/api/getCountGroupByArea', function (req, res) {
-  
+//   console.log("Begin: /api/getCountGroupByArea");
 //   var mongojs = require('mongojs');
 //   var db = mongojs(getMongoUri(), ["gnavi"]);
 
+//   console.log("Before getting areaCountList: " + (new Date()).toISOString());
 //   getCountGroupByArea(db)
 //     .then(function(areaCountList) {
+//       console.log("After getting areaCountList: " + (new Date()).toISOString());
+//       console.log("areaCountList");
 //       res.set('Content-Type', 'application/json');
 //       res.send(areaCountList);
 //     })
