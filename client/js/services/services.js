@@ -1,9 +1,6 @@
-var gnaviAPIservice = function($injectHttp, $injectQ) {
+var gnaviAPIservice = function($injectHttp) {
 
-    $q = $injectQ;
     $http = $injectHttp;
-
-    // var AreaList = function() {};
 
     var gnaviAPI = {};
 
@@ -14,20 +11,6 @@ var gnaviAPIservice = function($injectHttp, $injectQ) {
       });
     };
 
-    gnaviAPI.getCountGroupByArea = function() {
-      return $http({
-        method: 'GET', 
-        url: '/api/getCountGroupByArea'
-      });
-    };
-
-    gnaviAPI.getGnaviAreas = function() {
-      return $http({
-        method: 'GET', 
-        url: '/api/getGnaviAreas'
-      });
-    };
-
     gnaviAPI.getCountByArea = function(areaCode) {
       return $http({
         method: 'GET', 
@@ -35,20 +18,14 @@ var gnaviAPIservice = function($injectHttp, $injectQ) {
       });
     };
 
-    // gnaviAPI.getAreas = function() {
-    //   var deferred = $q.defer();
-    //   var uri = '/getGnaviAreas';
-    //   $http({
-    //     method: 'GET', 
-    //     url: uri
-    //   }).success(function (response) {
-    //     deferred.resolve(response);
-    //   }).error(function () {
-    //     deferred.reject('Failed to get Collection List');
-    //   });
-    //   return deferred.promise;
-    // };
+    gnaviAPI.getCountByCat = function(areaCode) {
+      return $http({
+        method: 'GET', 
+        url: '/api/getCountByCat'
+      });
+    };
 
+/*
     gnaviAPI.getCats = function() {
       var deferred = $q.defer();
       var uri = '/getGnaviCats';
@@ -105,11 +82,11 @@ var gnaviAPIservice = function($injectHttp, $injectQ) {
       });
       return deferred.promise;
     };
-
+*/
     return gnaviAPI;
 };
 
 
 var gnaviModule = angular.module('gnaviApp.services', []);
-gnaviModule.factory('gnaviAPIservice', ['$http', '$q', gnaviAPIservice]);
+gnaviModule.factory('gnaviAPIservice', ['$http', gnaviAPIservice]);
 

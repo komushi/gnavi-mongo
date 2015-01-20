@@ -1,7 +1,8 @@
 angular.module('gnaviApp').
+  /* Areas controller */
   controller('areasController', 
-    ['$scope', '$q', 'gnaviAPIservice', 'ngTableParams',
-    function($scope, $q, gnaviAPIservice, ngTableParams) {
+    ['$scope', 'gnaviAPIservice', 'ngTableParams',
+    function($scope, gnaviAPIservice, ngTableParams) {
 
 
     var model = {
@@ -31,30 +32,28 @@ angular.module('gnaviApp').
         }
     };
 
-    
-    // gnaviAPIservice.getCountGroupByArea().success(function (response) {
     gnaviAPIservice.getCountByArea().success(function (response) {
 
-        angular.extend(model.areaCountList, response);
+      angular.extend(model.areaCountList, response);
 
-        var tableParams = 
-          new ngTableParams({
-              page: 1,            // show first page
-              count:10           // count per page
-          }, {
-              total: model.areaCountList.length, // length of data
-              getData: function($defer, params) {
-                  $defer.resolve(tableSlice(model.areaCountList, params));
-              }
-          });
-
-        angular.extend($scope, {
-          model: model,
-          tableParams: tableParams,
-          xFunction: xFunction,
-          yFunction: yFunction,
-          descriptionFunction: descriptionFunction
+      var tableParams = 
+        new ngTableParams({
+            page: 1,            // show first page
+            count:10           // count per page
+        }, {
+            total: model.areaCountList.length, // length of data
+            getData: function($defer, params) {
+                $defer.resolve(tableSlice(model.areaCountList, params));
+            }
         });
+
+      angular.extend($scope, {
+        model: model,
+        tableParams: tableParams,
+        xFunction: xFunction,
+        yFunction: yFunction,
+        descriptionFunction: descriptionFunction
+      });
 
 
     });
