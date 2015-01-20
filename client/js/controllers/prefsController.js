@@ -3,7 +3,7 @@ angular.module('gnaviApp').
   /* Prefs controller */
   controller('prefsController', function($scope, gnaviAPIservice, ngTableParams) {
 
-    gnaviAPIservice.getPrefs().success(function (response) {
+    gnaviAPIservice.getGnaviPrefs().success(function (response) {
         //Digging into the response to get the relevant data
         var data = response.pref;
         $scope.tableParams = new ngTableParams({

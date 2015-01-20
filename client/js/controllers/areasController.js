@@ -32,7 +32,8 @@ angular.module('gnaviApp').
     };
 
     
-    gnaviAPIservice.getCountGroupByArea().success(function (response) {
+    // gnaviAPIservice.getCountGroupByArea().success(function (response) {
+    gnaviAPIservice.getCountByArea().success(function (response) {
 
         angular.extend(model.areaCountList, response);
 
