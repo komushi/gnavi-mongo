@@ -8,6 +8,7 @@ angular.module('gnaviApp').
     };
 
     var catList = [];
+    var areaList = [];
 
     var getRest = function(areaCode, catCode, callback) {
         return gnaviAPIservice.getRestByAreaCat(areaCode, catCode).then(
@@ -45,10 +46,9 @@ angular.module('gnaviApp').
       return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
     };
 
-
-    var pushChartData = function (areaObj) {
-      getRestCount(areaObj.area_code, catList, function (valueList) {
-
+    var pushChartData = function () {
+      gnaviAPIservice.getCountByAreaCat(areaList, catList).success(function(response) {
+        
         var series = {
           key:{},
           values:[]
@@ -56,7 +56,7 @@ angular.module('gnaviApp').
 
         angular.extend(series, {
           key: areaObj.area_name,
-          values: valueList
+          values: response
         });
 
         model.chartData.push(series);
@@ -65,6 +65,25 @@ angular.module('gnaviApp').
       });
     };
 
+    // var pushChartData = function (areaObj) {
+    //   getRestCount(areaObj.area_code, catList, function (valueList) {
+
+    //     var series = {
+    //       key:{},
+    //       values:[]
+    //     }
+
+    //     angular.extend(series, {
+    //       key: areaObj.area_name,
+    //       values: valueList
+    //     });
+
+    //     model.chartData.push(series);
+    //     console.info("model.chartData");
+    //     console.log(JSON.stringify(model.chartData));
+    //   });
+    // };
+
     var xAxisTickFormatFunction = function(){
         return function(d){
           return d;
@@ -72,15 +91,22 @@ angular.module('gnaviApp').
     };
 
     var changeSelectionArea = function(data, selected) {
-        console.info("data");
+        console.info("selected area:");
         console.info(data);
+
+        console.info("catList:");
+        console.info(catList);
+
+        console.info("areaList:");
+        console.info(areaList);
+        
         // console.info("selected");
         // console.info(selected);
 
 
         if (selected)
         {
-          pushChartData(data);
+          pushChartData();
         }
         else
         {
@@ -107,35 +133,22 @@ angular.module('gnaviApp').
         console.info("model.chartData");
         console.log(JSON.stringify(model.chartData));
 
-        // if (selected)
-        // {
-        //   pushChartData(data);
-        // }
-        // else
-        // {
-        //   model.chartData.forEach(function (obj, i) {
-        //     if (obj.key === data.area_name)
-        //     {
-        //       model.chartData.splice(i, 1);
-        //       return;
-        //     }
 
-        //   });          
-        // }
     };
 
     var initialize = function () {
-      gnaviAPIservice.getAreas().then(function(response) {
+      gnaviAPIservice.getGnaviAreas().success(function(response) {
         
-          var data = response.area;
+          areaList = response.area;
+
           var tableParams = 
             new ngTableParams({
                 page: 1,            // show first page
                 count:10           // count per page
             }, {
-                total: data.length, // length of data
+                total: areaList.length, // length of data
                 getData: function($defer, params) {
-                    $defer.resolve(tableSlice(data, params));
+                    $defer.resolve(tableSlice(areaList, params));
                 }
             });
 
@@ -144,7 +157,7 @@ angular.module('gnaviApp').
           });
       });
 
-      gnaviAPIservice.getCats().then(function(response) {
+      gnaviAPIservice.getGnaviCats().success(function(response) {
         
         catList = response.category_l;
         catList.forEach(function (obj, i) {

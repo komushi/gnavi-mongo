@@ -111,6 +111,101 @@ var getGnaviPrefs = function(db) {
 
 
 /**************************/
+/* REST API getGnaviAreas */
+app.get('/api/getGnaviAreas', function (req, res) {
+  console.log("Begin: /api/getGnaviAreas");
+  var mongojs = require('mongojs');
+  var db = mongojs(getMongoUri(), ["area"]);
+  
+  console.log("Before getting areaList: " + (new Date()).toISOString());
+  getGnaviAreas(db)
+    .then(function(areaList) {
+      console.log("After getting areaList: " + (new Date()).toISOString());
+      console.log("areaList:");
+      console.log(areaList);
+
+      res.set('Content-Type', 'application/json');
+      res.send(areaList);
+    })
+    .done(function() {
+      console.log("getGnaviAreas mongodb close");
+      db.close();
+      console.log("End: /api/getGnaviAreas");
+    });
+
+});
+
+var getGnaviAreas = function(db) {
+  var d = Q.defer();
+
+  db.area.findOne(function(err, areaList) {
+    if(err || !areaList) 
+    {
+      d.reject(new Error(err));
+    }
+    else 
+    {
+      console.log("areaList found");
+      d.resolve(areaList);
+
+    }
+  });
+
+  return d.promise;
+};
+
+/* REST API getGnaviAreas */
+/**************************/
+
+/**************************/
+/* REST API getGnaviCats */
+app.get('/api/getGnaviCats', function (req, res) {
+  console.log("Begin: /api/getGnaviCats");
+  var mongojs = require('mongojs');
+  var db = mongojs(getMongoUri(), ["category"]);
+  
+  console.log("Before getting catList: " + (new Date()).toISOString());
+  getGnaviCats(db)
+    .then(function(catList) {
+      console.log("After getting catList: " + (new Date()).toISOString());
+      console.log("catList:");
+      console.log(catList);
+
+      res.set('Content-Type', 'application/json');
+      res.send(catList);
+    })
+    .done(function() {
+      console.log("getGnaviCats mongodb close");
+      db.close();
+      console.log("End: /api/getGnaviCats");
+    });
+
+});
+
+var getGnaviCats = function(db) {
+  var d = Q.defer();
+
+  db.category.findOne(function(err, catList) {
+    if(err || !catList) 
+    {
+      d.reject(new Error(err));
+    }
+    else 
+    {
+      console.log("catList found");
+      d.resolve(catList);
+
+    }
+  });
+
+  return d.promise;
+};
+
+/* REST API getGnaviCats */
+/**************************/
+
+
+/**************************/
 /* REST API getCountByArea */
 app.get('/api/getCountByArea', function (req, res) {
   console.log("Begin: /api/getCountByArea");
@@ -146,24 +241,6 @@ app.get('/api/getCountByArea', function (req, res) {
   
 });
 
-var getGnaviAreas = function(db) {
-  var d = Q.defer();
-
-  db.area.findOne(function(err, areaList) {
-    if(err || !areaList) 
-    {
-      d.reject(new Error(err));
-    }
-    else 
-    {
-      console.log("areaList found");
-      d.resolve(areaList);
-
-    }
-  });
-
-  return d.promise;
-};
 
 var getCountByArea = function(db, area) {
 
@@ -245,25 +322,6 @@ app.get('/api/getCountByCat', function (req, res) {
   
 });
 
-var getGnaviCats = function(db) {
-  var d = Q.defer();
-
-  db.category.findOne(function(err, catList) {
-    if(err || !catList) 
-    {
-      d.reject(new Error(err));
-    }
-    else 
-    {
-      console.log("catList found");
-      d.resolve(catList);
-
-    }
-  });
-
-  return d.promise;
-};
-
 var getCountByCat = function(db, cat) {
 
   var d = Q.defer();
@@ -341,58 +399,87 @@ app.get('/api/dropIndex', function (req, res) {
 /* REST API getCountByCat */
 /**************************/
 
-/* tmp */
-app.get('/getGnaviRestByAreaCat', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/RestSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&category_l=" + req.query.category_l + "&area=" + req.query.area + "&hit_per_page=1&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+
+/**************************/
+/* REST API getCountByAreaCat */
+app.get('/api/getCountByAreaCat', function (req, res) {
+  console.log("Begin: /api/getCountByAreaCat");
+  var mongojs = require('mongojs');
+  var db = mongojs(getMongoUri(), ["gnavi","area"]);
+
+  console.log("Before getting areaList: " + (new Date()).toISOString());
+  getGnaviAreas(db)
+    .then(function(areaList) {
+        console.log("After getting areaList: " + (new Date()).toISOString());
+        console.log("areaList:");
+        console.log(areaList);
+        console.log("Before getting areaCountList: " + (new Date()).toISOString());
+
+        return getCountByAreaList(db, areaList);
+    })
+    .then(function(areaCountList) {
+      console.log("After getting areaCountList: " + (new Date()).toISOString());
+      console.log("areaCountList:");
+      console.log(areaCountList);
+      
 
       res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
+      res.send(areaCountList);
+    })
+    .catch(console.error)
+    .done(function() {
+      console.log("getCountByAreaCat mongodb close");
+      db.close();
+      console.log("End: /api/getCountByAreaCat");
+    });
 
-    }
-  })
+  
 });
 
-app.get('/getGnaviAreas', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/AreaSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
 
-      res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
+// var getCountByArea = function(db, area) {
 
-    }
-  })
-});
+//   var d = Q.defer();
 
-app.get('/getGnaviCats', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/CategoryLargeSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+//   db.gnavi.count({"code.areacode": area.area_code},function(err, count) {
+//     if (count == 0)
+//     {
+//       d.resolve({area_code: area.area_code , area_name: area.area_name, count: count});
+//     }
+//     else if (err || !count)
+//     {
+//       console.log(" err:" + err);
+//       d.reject(new Error(err));      
+//     }
+//     else 
+//     {
+//       d.resolve({area_code: area.area_code , area_name: area.area_name, count: count});
+//     }
+//   });
 
-      res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
+//   return d.promise;
+// };
 
-    }
-  })
-});
-/* tmp */
+// var getCountByAreaList = function(db, areaList) {
+//   var d = Q.defer();
+
+//   var prom = [];
+//   areaList.area.forEach(function (area) {
+//     prom.push(getCountByArea(db, area));
+//   });
+
+
+//   Q.all(prom)
+//     .then(function (areaCountList) {
+//         console.log("areaCountList found");
+//         d.resolve(areaCountList);
+//   });
+
+//   return d.promise;
+
+// };
+/* REST API getCountByAreaCat */
+/**************************/
 
 /* group by */
 // var getCountGroupByArea = function(db) {
@@ -449,74 +536,4 @@ app.get('/getGnaviCats', function (req, res) {
 // });
 /* group by */
 
-/*
-app.get('/getGnaviCats', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/CategoryLargeSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-
-      res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
-
-    }
-  })
-});
-
-app.get('/getGnaviRestByArea', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/RestSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&area=" + req.query.area + "&hit_per_page=1&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-
-      res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
-
-    }
-  })
-});
-
-app.get('/getGnaviRestByCat', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/RestSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&category_l=" + req.query.category_l + "&hit_per_page=1&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-
-      res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
-
-    }
-  })
-});
-
-app.get('/getGnaviRestByAreaCat', function (req, res) {
-  var url = "http://api.gnavi.co.jp/ver1/RestSearchAPI/?keyid=3752190c2d640eb83d502e192085ccf9&category_l=" + req.query.category_l + "&area=" + req.query.area + "&hit_per_page=1&format=json";
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-
-      res.set('Content-Type', 'application/json');
-      res.send(body);
-    }
-    else
-    {
-      console.log(response.statusCode);
-      console.log(error);
-
-    }
-  })
-});
-
-*/
 app.listen(process.env.PORT || 9000);
