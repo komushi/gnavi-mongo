@@ -7,98 +7,60 @@ angular.module('gnaviApp').
       chartData:[]
     };
 
+    var catList = [];
     var areaList = [];
 
-    var getRest = function(areaCode, catCode, callback) {
-        return gnaviAPIservice.getRestByAreaCat(areaCode, catCode).then(
-          function(data) {
-            return callback(data);
-          }
-        );
-
-    };
-
-
-    var getRestCount = function(catCode, areaList, callback){
-      var prom = [];
-      var valueList = [];
-
-      areaList.forEach(function (obj, i) {
-        if (obj.$selected)
-        {
-          prom.push(getRest(obj.area_code, catCode, function(data){
-              var jsonObj = angular.fromJson(
-                '["' + obj.area_name + 
-                '",' + data.total_hit_count + ']');
-
-              valueList.push(jsonObj);
-          }));
-        }
-      });
-
-      $q.all(prom).then(function () {
-          callback(valueList);
-      });
-    };
 
     var tableSlice = function(data, params){
       return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
     };
 
-
-    var pushChartData = function (catObj) {
-      getRestCount(catObj.category_l_code, $scope.tableAreaParams.data, function (valueList) {
-
-        var series = {
-          key:{},
-          values:[]
+    var selectedObjList = function (objList) {
+          
+      var selectedObjList = [];
+      
+      objList.forEach(function (obj) {
+        if (obj.$selected)
+        {
+          selectedObjList.push(obj);
         }
-
-        angular.extend(series, {
-          key: catObj.category_l_name,
-          values: valueList
-        });
-
-        model.chartData.push(series);
       });
+
+      return selectedObjList; 
     };
 
-    var xAxisTickFormatFunction = function(){
-        return function(d){
-          return d;
-        }
+    var pushChartData = function (pAreaList, pCatList, clearFlg) {
+
+      var jsonParam = {areaList: selectedObjList(pAreaList), catList: selectedObjList(pCatList)};
+
+      gnaviAPIservice.getCountByCatArea(jsonParam)
+        .success(function(response) {
+
+          if (clearFlg) 
+          {
+            angular.extend(model.chartData, response);
+          }
+          else
+          {
+            model.chartData.push(response[0]);  
+          }
+          
+        });
     };
+
+
 
     var changeSelectionArea = function(data, selected) {
-        // console.info("data");
-        // console.info(data);
-        // console.log("selected");
-        // console.info(selected);
 
-        // console.log(model.chartData);
+      pushChartData(areaList, catList, true);
 
-        // if (selected)
-        // {
-        //   pushChartData(data);
-        // }
-        // else
-        // {
-        //   model.chartData.forEach(function (obj, i) {
-        //     if (obj.key === data.area_name)
-        //     {
-        //       model.chartData.splice(i, 1);
-        //       return;
-        //     }
-
-        //   });          
-        // }
     };
 
     var changeSelectionCat = function(data, selected) {
 
         if (selected)
         {
-          pushChartData(data);
+          pushChartData(areaList, [data], false);
         }
         else
         {
@@ -114,18 +76,18 @@ angular.module('gnaviApp').
     };
 
     var initialize = function () {
-      gnaviAPIservice.getCats().then(function(response) {
+      gnaviAPIservice.getGnaviCats().success(function(response) {
         
-        var data = response.category_l;
+        catList = response.category_l;
 
         var tableParams = 
           new ngTableParams({
               page: 1,            // show first page
               count:10           // count per page
           }, {
-              total: data.length, // length of data
+              total: catList.length, // length of data
               getData: function($defer, params) {
-                  $defer.resolve(tableSlice(data, params));
+                  $defer.resolve(tableSlice(catList, params));
               }
           });
 
@@ -135,7 +97,7 @@ angular.module('gnaviApp').
 
       });
 
-      gnaviAPIservice.getAreas().then(function(response) {
+      gnaviAPIservice.getGnaviAreas().success(function(response) {
         
           // var data = response.area;
           areaList = response.area;

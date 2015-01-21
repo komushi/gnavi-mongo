@@ -34,7 +34,6 @@ angular.module('gnaviApp').
 
       gnaviAPIservice.getCountByAreaCat(jsonParam)
         .success(function(response) {
-          // console.log("response:" + JSON.stringify(response));
 
           if (clearFlg) 
           {
@@ -45,7 +44,6 @@ angular.module('gnaviApp').
             model.chartData.push(response[0]);  
           }
           
-
         });
     };
 

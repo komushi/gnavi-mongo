@@ -1,7 +1,6 @@
-var gnaviAPIservice = function($injectHttp, $injectQ) {
+var gnaviAPIservice = function($injectHttp) {
 
     $http = $injectHttp;
-    $q = $injectQ;
 
     var gnaviAPI = {};
 
@@ -41,9 +40,6 @@ var gnaviAPIservice = function($injectHttp, $injectQ) {
     };
 
     gnaviAPI.getCountByAreaCat = function(jsonParam) {
-      // console.log("gnaviAPI.getCountByAreaCat");
-      // console.log(JSON.stringify(jsonParam));
-
       return $http({
         method: 'POST', 
         url: '/api/getCountByAreaCat',
@@ -52,10 +48,18 @@ var gnaviAPIservice = function($injectHttp, $injectQ) {
       });
     };
 
+    gnaviAPI.getCountByCatArea = function(jsonParam) {
+      return $http({
+        method: 'POST', 
+        url: '/api/getCountByCatArea',
+        data: jsonParam,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
     return gnaviAPI;
 };
 
 
 var gnaviModule = angular.module('gnaviApp.services', []);
-gnaviModule.factory('gnaviAPIservice', ['$http', '$q', gnaviAPIservice]);
+gnaviModule.factory('gnaviAPIservice', ['$http', gnaviAPIservice]);
 

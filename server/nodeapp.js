@@ -22,6 +22,7 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
+app.disable('etag'); 
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 
@@ -39,21 +40,21 @@ app.use(express.static(path.join(application_root, "../client")));
 var uri;
 var getMongoUri = function() {
 
-  return "mongodb://CloudFoundry_ids0og1r_hlaug1jk_6l8hvfn8:ji2HOfQbTjqXHo-pfEO6St0a_4sPZwp0@ds031601.mongolab.com:31601/CloudFoundry_ids0og1r_hlaug1jk";
+  // return "mongodb://CloudFoundry_ids0og1r_hlaug1jk_6l8hvfn8:ji2HOfQbTjqXHo-pfEO6St0a_4sPZwp0@ds031601.mongolab.com:31601/CloudFoundry_ids0og1r_hlaug1jk";
 
-  // if (!uri)
-  // {
-  //   var cfenv = require("cfenv");
-  //   var appEnv = cfenv.getAppEnv();
-  //   var services = appEnv.getServices();
-  //   // console.log("services:" + JSON.stringify(services));
-  //   var myservice = appEnv.getService("gnavi_mongo");
-  //   var credentials = myservice.credentials;
-  //   // console.log("credentials:" + credentials);
-  //   uri = credentials.uri;
-  // }
+  if (!uri)
+  {
+    var cfenv = require("cfenv");
+    var appEnv = cfenv.getAppEnv();
+    var services = appEnv.getServices();
+    // console.log("services:" + JSON.stringify(services));
+    var myservice = appEnv.getService("gnavi_mongo");
+    var credentials = myservice.credentials;
+    // console.log("credentials:" + credentials);
+    uri = credentials.uri;
+  }
   
-  // return uri;
+  return uri;
 };
 /* get mongodb uri */
 /**************************/
@@ -510,14 +511,122 @@ app.post('/api/getCountByAreaCat', function (req, res) {
       console.log("End: /api/getCountByAreaCat");
     });
 
-  console.log("End: /api/getCountByAreaCat");
-
-
+  
   
 });
 
 
 /* REST API getCountByAreaCat */
+/**************************/
+
+
+/**************************/
+/* REST API getCountByCatArea */
+
+var getCountByCatArea = function(db, area, cat) {
+  // console.log("area:");
+  // console.log(area);
+
+  // console.log("cat:");
+  // console.log(cat);
+
+  var d = Q.defer();
+
+  db.gnavi.count({"code.category_code_l.0": cat.category_l_code, "code.areacode": area.area_code}, function(err, count) {
+    if (count == 0)
+    {
+      var jsonObj = JSON.parse('["' + area.area_name + '",' + count + ']');
+
+      d.resolve(jsonObj);
+    }
+    else if (err || !count)
+    {
+      console.log(" err:" + err);
+      d.reject(new Error(err));      
+    }
+    else 
+    {
+      var jsonObj = JSON.parse('["' + area.area_name + '",' + count + ']');
+
+      d.resolve(jsonObj);
+    }
+  });
+
+  return d.promise;
+};
+
+var getCountByCatAreaList = function(db, areaList, cat) {
+  var d = Q.defer();
+
+  var prom = [];
+  
+
+  areaList.forEach(function (area) {
+    prom.push(getCountByCatArea(db, area, cat));
+  });    
+
+
+
+  Q.all(prom)
+    .then(function (singleCatAreaCountList) {
+        console.log("singleCatAreaCountList found");
+        var result = {key:cat.category_l_name, values: singleCatAreaCountList};
+        d.resolve(result);
+  });
+
+  return d.promise;
+
+};
+
+var getCountByCatListAreaList = function(db, areaList, catList) {
+  var d = Q.defer();
+
+  var prom = [];
+  
+  catList.forEach(function (cat) {
+      prom.push(getCountByCatAreaList(db, areaList, cat)); 
+  });
+
+
+  Q.all(prom)
+    .then(function (catAreaCountList) {
+        console.log("catAreaCountList found");
+        d.resolve(catAreaCountList);
+  });
+
+  return d.promise;
+
+};
+
+app.post('/api/getCountByCatArea', function (req, res) {
+  console.log("Begin: /api/getCountByCatArea");
+  console.log("req.body:");
+  console.log(req.body);
+
+  var mongojs = require('mongojs');
+  var db = mongojs(getMongoUri(), ["gnavi"]);
+  
+  console.log("Before getting catAreaCountList: " + (new Date()).toISOString());
+  getCountByCatListAreaList(db, req.body.areaList ,req.body.catList )
+    .then(function(catAreaCountList) {
+      console.log("After getting catAreaCountList: " + (new Date()).toISOString());
+      console.log("catAreaCountList:");
+      console.log(JSON.stringify(catAreaCountList));
+
+      res.set('Content-Type', 'application/json');
+      res.send(catAreaCountList);
+    })
+    .done(function() {
+      console.log("getCountByCatArea mongodb close");
+      db.close();
+      console.log("End: /api/getCountByCatArea");
+    });
+
+  
+});
+
+
+/* REST API getCountByCatArea */
 /**************************/
 
 /* group by */
