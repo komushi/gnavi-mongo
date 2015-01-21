@@ -40,10 +40,15 @@ var gnaviAPIservice = function($injectHttp, $injectQ) {
       });
     };
 
-    gnaviAPI.getCountByAreaCat = function(areaList, catList) {
+    gnaviAPI.getCountByAreaCat = function(jsonParam) {
+      // console.log("gnaviAPI.getCountByAreaCat");
+      // console.log(JSON.stringify(jsonParam));
+
       return $http({
-        method: 'GET', 
-        url: '/api/getCountByAreaCat'
+        method: 'POST', 
+        url: '/api/getCountByAreaCat',
+        data: jsonParam,
+        headers: {'Content-Type': 'application/json'}
       });
     };
 

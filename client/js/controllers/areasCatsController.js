@@ -10,103 +10,50 @@ angular.module('gnaviApp').
     var catList = [];
     var areaList = [];
 
-    var getRest = function(areaCode, catCode, callback) {
-        return gnaviAPIservice.getRestByAreaCat(areaCode, catCode).then(
-          function(data) {
-            return callback(data);
-          }
-        );
-
-    };
-
-
-    var getRestCount = function(areaCode, catList, callback){
-      var prom = [];
-      var valueList = [];
-
-      catList.forEach(function (obj, i) {
-        if (obj.$selected)
-        {
-          prom.push(getRest(areaCode, obj.category_l_code, function(data){
-              var jsonObj = angular.fromJson(
-                '["' + obj.category_l_name + 
-                '",' + data.total_hit_count + ']');
-
-              valueList.push(jsonObj);
-          }));          
-        }
-      });
-
-      $q.all(prom).then(function () {
-          callback(valueList);
-      });
-    };
-
     var tableSlice = function(data, params){
       return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
     };
 
-    var pushChartData = function () {
-      gnaviAPIservice.getCountByAreaCat(areaList, catList).success(function(response) {
-        
-        var series = {
-          key:{},
-          values:[]
+    var selectedObjList = function (objList) {
+          
+      var selectedObjList = [];
+      
+      objList.forEach(function (obj) {
+        if (obj.$selected)
+        {
+          selectedObjList.push(obj);
         }
-
-        angular.extend(series, {
-          key: areaObj.area_name,
-          values: response
-        });
-
-        model.chartData.push(series);
-        console.info("model.chartData");
-        console.log(JSON.stringify(model.chartData));
       });
+
+      return selectedObjList; 
     };
 
-    // var pushChartData = function (areaObj) {
-    //   getRestCount(areaObj.area_code, catList, function (valueList) {
+    var pushChartData = function (pAreaList, pCatList, clearFlg) {
 
-    //     var series = {
-    //       key:{},
-    //       values:[]
-    //     }
+      var jsonParam = {areaList: selectedObjList(pAreaList), catList: selectedObjList(pCatList)};
 
-    //     angular.extend(series, {
-    //       key: areaObj.area_name,
-    //       values: valueList
-    //     });
+      gnaviAPIservice.getCountByAreaCat(jsonParam)
+        .success(function(response) {
+          // console.log("response:" + JSON.stringify(response));
 
-    //     model.chartData.push(series);
-    //     console.info("model.chartData");
-    //     console.log(JSON.stringify(model.chartData));
-    //   });
-    // };
+          if (clearFlg) 
+          {
+            angular.extend(model.chartData, response);
+          }
+          else
+          {
+            model.chartData.push(response[0]);  
+          }
+          
 
-    var xAxisTickFormatFunction = function(){
-        return function(d){
-          return d;
-        }
+        });
     };
 
     var changeSelectionArea = function(data, selected) {
-        console.info("selected area:");
-        console.info(data);
-
-        console.info("catList:");
-        console.info(catList);
-
-        console.info("areaList:");
-        console.info(areaList);
-        
-        // console.info("selected");
-        // console.info(selected);
-
 
         if (selected)
         {
-          pushChartData();
+          pushChartData([data], catList, false);
         }
         else
         {
@@ -120,19 +67,11 @@ angular.module('gnaviApp').
           });          
         }
 
-
-
     };
 
     var changeSelectionCat = function(data, selected) {
-        console.info("data");
-        console.info(data);
-        // console.info("selected");
-        // console.info(selected);
-
-        console.info("model.chartData");
-        console.log(JSON.stringify(model.chartData));
-
+        
+        pushChartData(areaList, catList, true);
 
     };
 
@@ -161,7 +100,7 @@ angular.module('gnaviApp').
         
         catList = response.category_l;
         catList.forEach(function (obj, i) {
-          obj.$selected = true;
+            obj.$selected = true;
         });
 
 
