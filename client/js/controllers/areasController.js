@@ -32,32 +32,37 @@ angular.module('gnaviApp').
         }
     };
 
-    gnaviAPIservice.getCountByArea().success(function (response) {
+    var initialize = function () {
+        console.log("areasController initialize");
 
-      angular.extend(model.areaCountList, response);
+        gnaviAPIservice.getCountByArea().success(function (response) {
 
-      var tableParams = 
-        new ngTableParams({
-            page: 1,            // show first page
-            count:10           // count per page
-        }, {
-            total: model.areaCountList.length, // length of data
-            getData: function($defer, params) {
-                $defer.resolve(tableSlice(model.areaCountList, params));
-            }
+          angular.extend(model.areaCountList, response);
+
+          var tableParams = 
+            new ngTableParams({
+                page: 1,            // show first page
+                count:10           // count per page
+            }, {
+                total: model.areaCountList.length, // length of data
+                getData: function($defer, params) {
+                    $defer.resolve(tableSlice(model.areaCountList, params));
+                }
+            });
+
+          angular.extend($scope, {
+            model: model,
+            tableParams: tableParams,
+            xFunction: xFunction,
+            yFunction: yFunction,
+            descriptionFunction: descriptionFunction
+          });
+
+
         });
+    };
 
-      angular.extend($scope, {
-        model: model,
-        tableParams: tableParams,
-        xFunction: xFunction,
-        yFunction: yFunction,
-        descriptionFunction: descriptionFunction
-      });
-
-
-    });
-
+    initialize();
 
   }]);
 

@@ -41,30 +41,39 @@ angular.module('gnaviApp').
         }
     };
 
-    gnaviAPIservice.getCountByCat().success(function (response) {
 
-      angular.extend(model.catCountList, response);
 
-      var tableParams = 
-        new ngTableParams({
-            page: 1,            // show first page
-            count:10           // count per page
-        }, {
-            total: model.catCountList.length, // length of data
-            getData: function($defer, params) {
-                $defer.resolve(tableSlice(model.catCountList, params));
-            }
+    var initialize = function () {
+
+      console.log("catsController initialize");
+
+      gnaviAPIservice.getCountByCat().success(function (response) {
+
+        angular.extend(model.catCountList, response);
+
+        var tableParams = 
+          new ngTableParams({
+              page: 1,            // show first page
+              count:10           // count per page
+          }, {
+              total: model.catCountList.length, // length of data
+              getData: function($defer, params) {
+                  $defer.resolve(tableSlice(model.catCountList, params));
+              }
+          });
+
+        angular.extend($scope, {
+          model: model,
+          tableParams: tableParams,
+          xAxisTickFormatFunction: xAxisTickFormatFunction,
+          xFunction: xFunction,
+          yFunction: yFunction,
+          descriptionFunction: descriptionFunction
+
         });
-
-      angular.extend($scope, {
-        model: model,
-        tableParams: tableParams,
-        xAxisTickFormatFunction: xAxisTickFormatFunction,
-        xFunction: xFunction,
-        yFunction: yFunction,
-        descriptionFunction: descriptionFunction
-
       });
-    });
 
+    };
+
+    initialize();
   }]);

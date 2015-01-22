@@ -74,6 +74,8 @@ angular.module('gnaviApp').
     };
 
     var initialize = function () {
+      console.log("areasCatsController initialize");
+
       gnaviAPIservice.getGnaviAreas().success(function(response) {
         
           areaList = response.area;
