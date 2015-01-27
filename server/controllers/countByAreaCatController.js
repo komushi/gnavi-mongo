@@ -4,7 +4,7 @@ var mongodbManager = require('../utils/mongodbManager');
 
 
 /**************************/
-/* REST API getCountByCat */
+/* REST API getCountByAreaCat */
 exports.getCountByAreaCat = function (req, res) {
   console.log("Begin: /api/getCountByAreaCat");
   console.log("Before getting areaCatCountList: " + (new Date()).toISOString());
@@ -106,5 +106,5 @@ var getCountByAreaListCatListPromise = function(db, areaList, catList) {
   return d.promise;
 
 };
-/* REST API getCountByCat */
+/* REST API getCountByAreaCat */
 /**************************/
