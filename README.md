@@ -10,14 +10,12 @@ This is a 3-tier SPA or Single Page Application demo which is hosted on [Pivotal
  2. Logic tier using Node.js including REST API for Web UI, Business Logic to manipulate the data from mongodb.
  3. Data tier using mongojs to communicate with mongodb instance hosted on mongolab.
 
-
+----------
 Architecture
 -------------
 
 
 ----------
-
-
 Live Demo
 -------------
 [Application on PWS](http://gnavi-mongo.cfapps.io/)
