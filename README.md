@@ -55,11 +55,11 @@ Deployment to Cloud Foundry
 -------------
 git clone this repository,
 ```
-git clone https://github.com/komushi/angular-gnavi
-cd angular-gnavi
+git clone https://github.com/komushi/gnavi-mongo
+cd gnavi-mongo
 ```
 
-Remeber to install [cf cli](https://github.com/cloudfoundry/cli/releases) and then get an account from [Pivotal Web Services](http://run.pivotal.io/).
+Remember to install [cf cli](https://github.com/cloudfoundry/cli/releases) and then get an account from [Pivotal Web Services](http://run.pivotal.io/).
 Then, push the application:
 ```
 cf push
