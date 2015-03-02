@@ -1,6 +1,8 @@
 ---
 applications:
-- name: gnavi-mongo
-memory: 512M
-instances: 1
-host: gnavi-mongo-${random-word}
+- name: gnavi-mongo-random
+  memory: 512M
+  instances: 1
+  host: gnavi-mongo-${random-word}
+  env:
+    SERVICE_NAME: <your mongodb service>
