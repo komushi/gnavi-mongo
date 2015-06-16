@@ -6,3 +6,4 @@ applications:
   host: gnavi-mongo-${random-word}
   env:
     SERVICE_NAME: <your mongodb service>
+    

@@ -1,4 +1,5 @@
 var express = require("express");
+var passport = require('passport');
 var prefsController = require("../controllers/prefsController");
 var areasController = require("../controllers/areasController");
 var catsController = require("../controllers/catsController");
