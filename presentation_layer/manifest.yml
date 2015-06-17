@@ -1,17 +1,9 @@
 ---
 applications:
-- name: gnavi-msa-bl
-  memory: 512M
-  instances: 1
-  host: gnavi-msa-bl
-  path: business_logic_layer/
-  services:
-    - mongotest
 - name: gnavi-msa-pl
   memory: 64M
   instances: 2
   host: gnavi-msa-pl
-  path: presentation_layer/
   env:
     BusinessLogicURI: http://gnavi-msa-bl.kolsch.mini.pez.pivotal.io
     

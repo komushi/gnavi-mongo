@@ -1,0 +1,8 @@
+---
+applications:
+- name: gnavi-msa-bl
+  memory: 512M
+  instances: 1
+  host: gnavi-msa-bl
+  services:
+    - mongotest

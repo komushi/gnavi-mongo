@@ -1,9 +1,8 @@
 {
-  "name": "gnavi-mongo",
+  "name": "gnavi-msa-bl",
   "private": true,
   "version": "1.0.0",
   "description": "Analytics for public Rest data source",
-  "repository": "http://komushi.github.io/gnavi-mongo/",
   "license": "MIT",
   "dependencies": {
     "express": "~4.0.0",

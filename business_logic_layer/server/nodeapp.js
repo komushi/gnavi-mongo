@@ -28,7 +28,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 
    extended: true 
 }));
-app.use(express.static(path.join(application_root, "../client")));
+
+//app.use(express.static(path.join(application_root, "../client")));
+
 app.use('/', routes);
 /* config */
 /**************************/

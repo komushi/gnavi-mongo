@@ -3,46 +3,47 @@ var gnaviAPIservice = function($injectHttp) {
     $http = $injectHttp;
 
     var gnaviAPI = {};
+    var serviceURI = "http://gnavi-msa-bl.kolsch.mini.pez.pivotal.io";
 
     gnaviAPI.getGnaviPrefs = function() {
       return $http({
         method: 'GET', 
-        url: '/api/getGnaviPrefs'
+        url: serviceURI + '/api/getGnaviPrefs'
       });
     };
 
     gnaviAPI.getGnaviCats = function() {
       return $http({
         method: 'GET', 
-        url: '/api/getGnaviCats'
+        url: serviceURI + '/api/getGnaviCats'
       });
     };
 
     gnaviAPI.getGnaviAreas = function() {
       return $http({
         method: 'GET', 
-        url: '/api/getGnaviAreas'
+        url: serviceURI + '/api/getGnaviAreas'
       });
     };
 
     gnaviAPI.getCountByArea = function() {
       return $http({
         method: 'GET', 
-        url: '/api/getCountByArea'
+        url: serviceURI + '/api/getCountByArea'
       });
     };
 
     gnaviAPI.getCountByCat = function() {
       return $http({
         method: 'GET', 
-        url: '/api/getCountByCat'
+        url: serviceURI + '/api/getCountByCat'
       });
     };
 
     gnaviAPI.getCountByAreaCat = function(jsonParam) {
       return $http({
         method: 'POST', 
-        url: '/api/getCountByAreaCat',
+        url: serviceURI + '/api/getCountByAreaCat',
         data: jsonParam,
         headers: {'Content-Type': 'application/json'}
       });
@@ -51,7 +52,7 @@ var gnaviAPIservice = function($injectHttp) {
     gnaviAPI.getCountByCatArea = function(jsonParam) {
       return $http({
         method: 'POST', 
-        url: '/api/getCountByCatArea',
+        url: serviceURI + '/api/getCountByCatArea',
         data: jsonParam,
         headers: {'Content-Type': 'application/json'}
       });
