@@ -5,7 +5,7 @@ var mongodbManager = require('../utils/mongodbManager');
 /**************************/
 /* REST API ensureIndex */
 exports.ensureIndex = function (req, res) {
-  console.log("Begin: /api/ensureIndex");
+  console.log("Begin: ensureIndex");
 
   var db = mongodbManager.getConnection(["gnavi"]);
 
@@ -15,7 +15,7 @@ exports.ensureIndex = function (req, res) {
 
   res.send("indexes ensured");
 
-  console.log("End: /api/ensureIndex");
+  console.log("End: ensureIndex");
 };
 /* REST API ensureIndex */
 /**************************/
@@ -23,7 +23,7 @@ exports.ensureIndex = function (req, res) {
 /**************************/
 /* REST API dropIndex */
 exports.dropIndex = function (req, res) {
-  console.log("Begin: /api/dropIndex");
+  console.log("Begin: dropIndex");
 
   var db = mongodbManager.getConnection(["gnavi"]);
 
@@ -31,7 +31,7 @@ exports.dropIndex = function (req, res) {
 
   res.send("indexes dropped");
 
-  console.log("End: /api/dropIndex");
+  console.log("End: dropIndex");
 };
 /* REST API dropIndex */
 /**************************/

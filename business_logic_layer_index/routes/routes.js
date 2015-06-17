@@ -19,8 +19,8 @@ router.route('/api')
 
 /**************************/
 /* REST API ensureIndex */
-router.route('/api/ensureIndex')
-  .get(function (req, res) {
+router.route('/api/index')
+  .put(function (req, res) {
     indexController.ensureIndex(req, res);
 });
 /* REST API ensureIndex */
@@ -28,8 +28,8 @@ router.route('/api/ensureIndex')
 
 /**************************/
 /* REST API dropIndex */
-router.route('/api/dropIndex')
-  .get(function (req, res) {
+router.route('/api/index')
+  .delete(function (req, res) {
     indexController.dropIndex(req, res);
 });
 /* REST API dropIndex */

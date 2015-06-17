@@ -4,15 +4,15 @@ var mongodbManager = require('../utils/mongodbManager');
 
 
 
-/**************************/
-/* REST API getGnaviCats */
-exports.getGnaviCats = function (req, res) {
-  console.log("Begin: /api/getGnaviCats");
+/*************************************/
+/* REST API controller getCategories */
+exports.getCategories = function (req, res) {
+  console.log("Begin: getCategories");
   console.log("Before getting catList: " + (new Date()).toISOString());
 
   var db = mongodbManager.getConnection(["category"]);
 
-  getGnaviCatsPromise(db)
+  getCategoriesPromise(db)
     .then(function(catList) {
       console.log("After getting catList: " + (new Date()).toISOString());
       console.log("catList:");
@@ -22,17 +22,17 @@ exports.getGnaviCats = function (req, res) {
       res.send(catList);
     })
     .done(function() {
-      console.log("getGnaviCats mongodb close");
+      console.log("getCategories mongodb close");
       db.close();
-      console.log("End: /api/getGnaviCats");
+      console.log("End: getCategories");
     });
 };
 
-exports.getGnaviCatsPromise = function(db) {
-  return getGnaviCatsPromise(db);
+exports.getCategoriesPromise = function(db) {
+  return getCategoriesPromise(db);
 };
 
-var getGnaviCatsPromise = function(db) {
+var getCategoriesPromise = function(db) {
   var d = Q.defer();
 
   db.category.findOne(function(err, catList) {
@@ -50,6 +50,6 @@ var getGnaviCatsPromise = function(db) {
 
   return d.promise;
 };
-/* REST API getGnaviCats */
-/**************************/
+/* REST API controller getCategories */
+/*************************************/
 

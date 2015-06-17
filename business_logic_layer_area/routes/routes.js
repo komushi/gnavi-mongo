@@ -20,41 +20,41 @@ router.route('/api')
 /**************************/
 
 /**************************/
-/* REST API /api/getGnaviPrefs */
-router.route('/api/getGnaviPrefs')
+/* REST API /api/prefectures */
+router.route('/api/prefectures')
   .get(function (req, res) {
-    prefsController.getGnaviPrefs(req, res);
+    prefsController.getPrefectures(req, res);
 });
-/* REST API /api/getGnaviPrefs */
+/* REST API /api/prefectures */
 /**************************/
 
 /**************************/
-/* REST API /api/getGnaviAreas */
-router.route('/api/getGnaviAreas')
+/* REST API /api/areas */
+router.route('/api/areas')
   .get(function (req, res) {
-    areasController.getGnaviAreas(req, res);
+    areasController.getAreas(req, res);
 });
-/* REST API /api/getGnaviAreas */
+/* REST API /api/areas */
 /**************************/
 
 
 /**************************/
-/* REST API /api/getCountByArea */
-router.route('/api/getCountByArea')
+/* REST API /api/count_by_area */
+router.route('/api/count_by_area')
   .get(function (req, res) {
     countByAreaController.getCountByArea(req, res);
 });
-/* REST API /api/getCountByArea */
+/* REST API /api/count_by_area */
 /**************************/
 
 
 /**************************/
-/* REST API /api/getCountByCat */
-router.route('/api/getCountByAreaCat')
+/* REST API /api/count_by_area_cat */
+router.route('/api/count_by_area_cat')
   .post(function (req, res) {
     countByAreaCatController.getCountByAreaCat(req, res);
 });
-/* REST API /api/getCountByCat */
+/* REST API /api/count_by_area_cat */
 /**************************/
 
 

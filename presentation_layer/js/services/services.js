@@ -10,42 +10,42 @@ var gnaviAPIservice = function($injectHttp) {
     gnaviAPI.getGnaviPrefs = function() {
       return $http({
         method: 'GET', 
-        url: areaServiceURI + '/api/getGnaviPrefs'
+        url: areaServiceURI + '/api/prefectures'
       });
     };
 
     gnaviAPI.getGnaviCats = function() {
       return $http({
         method: 'GET', 
-        url: catServiceURI + '/api/getGnaviCats'
+        url: catServiceURI + '/api/categories'
       });
     };
 
     gnaviAPI.getGnaviAreas = function() {
       return $http({
         method: 'GET', 
-        url: areaServiceURI + '/api/getGnaviAreas'
+        url: areaServiceURI + '/api/areas'
       });
     };
 
     gnaviAPI.getCountByArea = function() {
       return $http({
         method: 'GET', 
-        url: areaServiceURI + '/api/getCountByArea'
+        url: areaServiceURI + '/api/count_by_area'
       });
     };
 
     gnaviAPI.getCountByCat = function() {
       return $http({
         method: 'GET', 
-        url: catServiceURI + '/api/getCountByCat'
+        url: catServiceURI + '/api/count_by_category'
       });
     };
 
     gnaviAPI.getCountByAreaCat = function(jsonParam) {
       return $http({
         method: 'POST', 
-        url: areaServiceURI + '/api/getCountByAreaCat',
+        url: areaServiceURI + '/api/count_by_area_cat',
         data: jsonParam,
         headers: {'Content-Type': 'application/json'}
       });
@@ -54,7 +54,7 @@ var gnaviAPIservice = function($injectHttp) {
     gnaviAPI.getCountByCatArea = function(jsonParam) {
       return $http({
         method: 'POST', 
-        url: catServiceURI + '/api/getCountByCatArea',
+        url: catServiceURI + '/api/count_by_cat_area',
         data: jsonParam,
         headers: {'Content-Type': 'application/json'}
       });

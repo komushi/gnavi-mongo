@@ -4,15 +4,15 @@ var mongodbManager = require('../utils/mongodbManager');
 
 
 
-/**************************/
-/* REST API getGnaviAreas */
-exports.getGnaviAreas = function (req, res) {
-  console.log("Begin: /api/getGnaviAreas");
+/********************************/
+/* REST API controller getAreas */
+exports.getAreas = function (req, res) {
+  console.log("Begin: getAreas");
   console.log("Before getting areaList: " + (new Date()).toISOString());
 
   var db = mongodbManager.getConnection(["area"]);
 
-  getGnaviAreasPromise(db)
+  getAreasPromise(db)
     .then(function(areaList) {
       console.log("After getting areaList: " + (new Date()).toISOString());
       console.log("areaList:");
@@ -22,17 +22,17 @@ exports.getGnaviAreas = function (req, res) {
       res.send(areaList);
     })
     .done(function() {
-      console.log("getGnaviAreas mongodb close");
+      console.log("getAreas mongodb close");
       db.close();
-      console.log("End: /api/getGnaviAreas");
+      console.log("End: getAreas");
     });
 };
 
-exports.getGnaviAreasPromise = function(db) {
-  return getGnaviAreasPromise(db);
+exports.getAreasPromise = function(db) {
+  return getAreasPromise(db);
 };
 
-var getGnaviAreasPromise = function(db) {
+var getAreasPromise = function(db) {
   var d = Q.defer();
 
   db.area.findOne(function(err, areaList) {
@@ -50,5 +50,6 @@ var getGnaviAreasPromise = function(db) {
 
   return d.promise;
 };
-/* REST API getGnaviAreas */
-/**************************/
+
+/* REST API controller getAreas */
+/********************************/

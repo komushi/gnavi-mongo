@@ -4,15 +4,15 @@ var mongodbManager = require('../utils/mongodbManager');
 var catsController = require("./catsController");
 
 
-/**************************/
-/* REST API getCountByCat */
+/*************************************/
+/* REST API controller getCountByCat */
 exports.getCountByCat = function (req, res) {
-  console.log("Begin: /api/getCountByCat");
+  console.log("Begin: getCountByCat");
   console.log("Before getting catList: " + (new Date()).toISOString());
 
   var db = mongodbManager.getConnection(["gnavi","category"]);
 
-  catsController.getGnaviCatsPromise(db)
+  catsController.getCategoriesPromise(db)
     .then(function(catList) {
       console.log("After getting catList: " + (new Date()).toISOString());
       console.log("catList:");
@@ -33,7 +33,7 @@ exports.getCountByCat = function (req, res) {
     .done(function() {
       console.log("getCountByCat mongodb close");
       db.close();
-      console.log("End: /api/getCountByCat");
+      console.log("End: getCountByCat");
     });
   
 
@@ -81,6 +81,6 @@ var getCountByCatListPromise = function(db, catList) {
   return d.promise;
 
 };
-/* REST API getCountByCat */
-/**************************/
 
+/* REST API controller getCountByCat */
+/*************************************/

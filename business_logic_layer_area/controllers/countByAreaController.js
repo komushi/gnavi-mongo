@@ -4,16 +4,16 @@ var mongodbManager = require('../utils/mongodbManager');
 var areasController = require("./areasController");
 
 
-/**************************/
-/* REST API getCountByArea */
+/**************************************/
+/* REST API controller getCountByArea */
 exports.getCountByArea = function (req, res) {
-  console.log("Begin: /api/getCountByArea");
+  console.log("Begin: getCountByArea");
   console.log("Before getting areaList: " + (new Date()).toISOString());
 
   
   var db = mongodbManager.getConnection(["gnavi","area"]);
 
-  areasController.getGnaviAreasPromise(db)
+  areasController.getAreasPromise(db)
     .then(function(areaList) {
         console.log("After getting areaList: " + (new Date()).toISOString());
         console.log("areaList:");
@@ -35,7 +35,7 @@ exports.getCountByArea = function (req, res) {
     .done(function() {
       console.log("getCountByArea mongodb close");
       db.close();
-      console.log("End: /api/getCountByArea");
+      console.log("End: getCountByArea");
     });
 
 };
@@ -81,7 +81,6 @@ var getCountByAreaListPromise = function(db, areaList) {
   return d.promise;
 
 };
-/* REST API getCountByArea */
-/**************************/
 
-
+/* REST API controller getCountByArea */
+/**************************************/

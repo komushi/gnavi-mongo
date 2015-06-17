@@ -3,10 +3,10 @@ var mongojs = require('mongojs');
 var mongodbManager = require('../utils/mongodbManager');
 
 
-/**************************/
-/* REST API getCountByAreaCat */
+/*****************************************/
+/* REST API controller getCountByAreaCat */
 exports.getCountByAreaCat = function (req, res) {
-  console.log("Begin: /api/getCountByAreaCat");
+  console.log("Begin: getCountByAreaCat");
   console.log("Before getting areaCatCountList: " + (new Date()).toISOString());
 
   var db = mongodbManager.getConnection(["gnavi"]);
@@ -23,7 +23,7 @@ exports.getCountByAreaCat = function (req, res) {
     .done(function() {
       console.log("getCountByAreaCat mongodb close");
       db.close();
-      console.log("End: /api/getCountByAreaCat");
+      console.log("End: getCountByAreaCat");
     });
   
 
@@ -106,5 +106,5 @@ var getCountByAreaListCatListPromise = function(db, areaList, catList) {
   return d.promise;
 
 };
-/* REST API getCountByAreaCat */
-/**************************/
+/* REST API controller getCountByAreaCat */
+/*****************************************/

@@ -19,30 +19,30 @@ router.route('/api')
 /**************************/
 
 /**************************/
-/* REST API /api/getGnaviCats */
-router.route('/api/getGnaviCats')
+/* REST API /api/categories */
+router.route('/api/categories')
   .get(function (req, res) {
-    catsController.getGnaviCats(req, res);
+    catsController.getCategories(req, res);
 });
-/* REST API /api/getGnaviCats */
+/* REST API /api/categories */
 /**************************/
 
 /**************************/
-/* REST API /api/getCountByCat */
-router.route('/api/getCountByCat')
+/* REST API /api/count_by_category */
+router.route('/api/count_by_category')
   .get(function (req, res) {
     countByCatController.getCountByCat(req, res);
 });
-/* REST API /api/getCountByCat */
+/* REST API /api/count_by_category */
 /**************************/
 
 /**************************/
-/* REST API /api/getCountByCat */
-router.route('/api/getCountByCatArea')
+/* REST API /api/count_by_cat_area */
+router.route('/api/count_by_cat_area')
   .post(function (req, res) {
     countByCatAreaController.getCountByCatArea(req, res);
 });
-/* REST API /api/getCountByCat */
+/* REST API /api/count_by_cat_area */
 /**************************/
 
 
