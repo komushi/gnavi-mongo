@@ -1,13 +1,8 @@
 var express = require("express");
-var passport = require('passport');
 var prefsController = require("../controllers/prefsController");
 var areasController = require("../controllers/areasController");
-var catsController = require("../controllers/catsController");
 var countByAreaController = require("../controllers/countByAreaController");
-var countByCatController = require("../controllers/countByCatController");
 var countByAreaCatController = require("../controllers/countByAreaCatController");
-var countByCatAreaController = require("../controllers/countByCatAreaController");
-var indexController = require("../controllers/indexController");
 
 
 
@@ -42,14 +37,6 @@ router.route('/api/getGnaviAreas')
 /* REST API /api/getGnaviAreas */
 /**************************/
 
-/**************************/
-/* REST API /api/getGnaviCats */
-router.route('/api/getGnaviCats')
-  .get(function (req, res) {
-    catsController.getGnaviCats(req, res);
-});
-/* REST API /api/getGnaviCats */
-/**************************/
 
 /**************************/
 /* REST API /api/getCountByArea */
@@ -60,14 +47,6 @@ router.route('/api/getCountByArea')
 /* REST API /api/getCountByArea */
 /**************************/
 
-/**************************/
-/* REST API /api/getCountByCat */
-router.route('/api/getCountByCat')
-  .get(function (req, res) {
-    countByCatController.getCountByCat(req, res);
-});
-/* REST API /api/getCountByCat */
-/**************************/
 
 /**************************/
 /* REST API /api/getCountByCat */
@@ -78,32 +57,6 @@ router.route('/api/getCountByAreaCat')
 /* REST API /api/getCountByCat */
 /**************************/
 
-/**************************/
-/* REST API /api/getCountByCat */
-router.route('/api/getCountByCatArea')
-  .post(function (req, res) {
-    countByCatAreaController.getCountByCatArea(req, res);
-});
-/* REST API /api/getCountByCat */
-/**************************/
-
-/**************************/
-/* REST API ensureIndex */
-router.route('/api/ensureIndex')
-  .get(function (req, res) {
-    indexController.ensureIndex(req, res);
-});
-/* REST API ensureIndex */
-/**************************/
-
-/**************************/
-/* REST API dropIndex */
-router.route('/api/dropIndex')
-  .get(function (req, res) {
-    indexController.dropIndex(req, res);
-});
-/* REST API dropIndex */
-/**************************/
 
 
 module.exports=router;
