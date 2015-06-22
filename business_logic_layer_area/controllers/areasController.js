@@ -20,6 +20,7 @@ exports.getAreas = function (req, res) {
       res.set('Content-Type', 'application/json');
       res.send(areaList);
     })
+    .catch(console.error)
     .done(function() {
       console.log("getAreas mongodb close");
       db.close();

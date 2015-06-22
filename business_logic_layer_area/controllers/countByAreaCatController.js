@@ -19,6 +19,7 @@ exports.getCountByAreaCat = function (req, res) {
       res.set('Content-Type', 'application/json');
       res.send(areaCatCountList);
     })
+    .catch(console.error)
     .done(function() {
       console.log("getCountByAreaCat mongodb close");
       db.close();

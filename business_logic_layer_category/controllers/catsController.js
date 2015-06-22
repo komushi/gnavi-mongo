@@ -20,6 +20,7 @@ exports.getCategories = function (req, res) {
       res.set('Content-Type', 'application/json');
       res.send(catList);
     })
+    .catch(console.error)
     .done(function() {
       console.log("getCategories mongodb close");
       db.close();

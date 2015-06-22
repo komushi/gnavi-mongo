@@ -20,6 +20,7 @@ exports.getPrefectures = function (req, res) {
       res.set('Content-Type', 'application/json');
       res.send(prefectureList);
     })
+    .catch(console.error)
     .done(function() {
       console.log("getPrefectures mongodb close");
       db.close();
