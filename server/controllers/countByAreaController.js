@@ -1,5 +1,4 @@
 var Q = require("q");
-var mongojs = require('mongojs');
 var mongodbManager = require('../utils/mongodbManager');
 var areasController = require("./areasController");
 
@@ -24,6 +23,11 @@ exports.getCountByArea = function (req, res) {
     })
     .then(function(areaCountList) {
       console.log("After getting areaCountList: " + (new Date()).toISOString());
+
+      areaCountList.sort(function(a, b) {
+          return parseFloat(b.count) - parseFloat(a.count);
+      });
+      
       console.log("areaCountList:");
       console.log(areaCountList);
       

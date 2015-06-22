@@ -7,17 +7,21 @@ var getMongoUri = function() {
     var cfenv = require("cfenv");
     var appEnv = cfenv.getAppEnv();
     var services = appEnv.getServices();
-    var mongodbService = process.env["SERVICE_NAME"];
 
-    var myservice = appEnv.getService(mongodbService);
-    var credentials = myservice.credentials;
+    for (service in services) {
+      if (services[service].tags.indexOf("mongodb") >= 0) {
+        var credentials = services[service]["credentials"]
+        uri = credentials.uri;
 
-    uri = credentials.uri;
+        console.log("Found ", service, " ", credentials);
+
+        break;
+      }
+    }
   }
 
   return uri;
 };
-
 
 exports.getConnection = function(collections) {
   var db = mongojs(getMongoUri(), collections);

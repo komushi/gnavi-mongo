@@ -1,8 +1,6 @@
 var Q = require("q");
 var mongodbManager = require('../utils/mongodbManager');
 
-
-
 /**************************/
 /* REST API getGnaviPrefs */
 exports.getGnaviPrefs = function (req, res) {

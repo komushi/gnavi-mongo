@@ -1,5 +1,4 @@
 var Q = require("q");
-var mongojs = require('mongojs');
 var mongodbManager = require('../utils/mongodbManager');
 var catsController = require("./catsController");
 
@@ -23,6 +22,11 @@ exports.getCountByCat = function (req, res) {
     })
     .then(function(catCountList) {
       console.log("After getting catCountList: " + (new Date()).toISOString());
+
+      catCountList.sort(function(a, b) {
+          return parseFloat(b.count) - parseFloat(a.count);
+      });
+      
       console.log("catCountList:");
       console.log(catCountList);
 
