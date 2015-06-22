@@ -1,5 +1,3 @@
-
-var mongojs = require('mongojs');
 var mongodbManager = require('../utils/mongodbManager');
 
 /**************************/

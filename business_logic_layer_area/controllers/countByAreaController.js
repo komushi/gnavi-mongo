@@ -1,5 +1,4 @@
 var Q = require("q");
-var mongojs = require('mongojs');
 var mongodbManager = require('../utils/mongodbManager');
 var areasController = require("./areasController");
 
