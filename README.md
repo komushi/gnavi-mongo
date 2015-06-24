@@ -3,6 +3,7 @@ Welcome to gnavi-mongo demo!
 
 Overview
 -------------
+Microservices Architecture
 
 This is a 3-tier SPA or Single Page Application demo which is hosted on [Pivotal Web Services](https://run.pivotal.io/) - a [Cloud Foundry](http://www.cloudfoundry.org/) PaaS cloud service.
 

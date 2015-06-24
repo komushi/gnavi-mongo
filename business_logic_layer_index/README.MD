@@ -1,26 +1,23 @@
-Welcome to gnavi-msa-pl!
+Welcome to gnavi-msa-bl-index!
 ===================
 
 Overview
 -------------
 
-Presentation layer using AngularJS MVW framework for Web UI.
+Business Logic layer for index tuning.
 
 -------------
 Deployment to Cloud Foundry
 -------------
-bower install dependencies,
-```
-bower install
-```
+git clone this repository and this msa branch.
 
 Remember to install [cf cli](https://github.com/cloudfoundry/cli/releases).
-Then, push the application:
+After login, push the application:
 ```
 cf push
 ```
 
 You can access your app at 
 ```
-http://gnavi-msa-pl.<your_cf_domain>
+http://gnavi-msa-bl-index.<your_cf_domain>/api
 ```
