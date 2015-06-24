@@ -2,14 +2,14 @@
   "name": "gnavi-mongo",
   "version": "1.0.0",
   "description": "Analytics for public Rest data source",
-  "homepage": "http://komushi.github.io/gnavi-mongo/",
+  "homepage": "https://github.com/komushi/gnavi-mongo/tree/msa",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "1.2.x",
-    "angular-route": "1.2.x",
-    "bootstrap": "~3.2.0",
-    "ng-table": "~0.3.3",
+    "angular": "~1.4.1",
+    "angular-route": "~1.4.1",
+    "bootstrap": "~3.3.5",
+    "ng-table": "~0.5.4",
     "angularjs-nvd3-directives": "~0.0.7"
   }
 }
