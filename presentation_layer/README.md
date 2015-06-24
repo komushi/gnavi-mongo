@@ -9,7 +9,7 @@ Presentation layer using AngularJS MVW framework for Web UI.
 -------------
 Deployment to Cloud Foundry
 -------------
-bower install dependencies,
+bower install dependencies:
 ```
 bower install
 ```

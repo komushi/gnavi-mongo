@@ -58,14 +58,22 @@ git clone this repository,
 ```
 git clone https://github.com/komushi/gnavi-mongo
 cd gnavi-mongo
+git checkout -b msa origin/msa
 ```
 
-Remember to install [cf cli](https://github.com/cloudfoundry/cli/releases) and then get an account from [Pivotal Web Services](http://run.pivotal.io/).
+bower install dependencies:
+```
+cd presentation_layer
+bower install
+```
+
+Remember to install [cf cli](https://github.com/cloudfoundry/cli/releases).
 Then, push the application:
 ```
 cf push
 ```
+
 You can access your app at 
 ```
-http://gnavi-mongo-${random-word}.cfapps.io
+http://gnavi-msa-pl.<your_cf_domain>
 ```
