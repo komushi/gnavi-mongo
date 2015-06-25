@@ -4,6 +4,4 @@ applications:
   memory: 64M
   instances: 2
   host: gnavi-msa-pl
-  env:
-    BusinessLogicURI: http://gnavi-msa-bl.kolsch.mini.pez.pivotal.io
     
