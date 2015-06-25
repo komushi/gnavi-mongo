@@ -35,31 +35,38 @@ angular.module('gnaviApp').
     var initialize = function () {
         console.log("areasController initialize");
 
-        gnaviAPIservice.getCountByArea().success(function (response) {
+        gnaviAPIservice.getCountByArea()
+            .then(function (response) {
 
-          angular.extend(model.areaCountList, response);
+              angular.extend(model.areaCountList, response);
 
-          var tableParams = 
-            new ngTableParams({
-                page: 1,            // show first page
-                count:10           // count per page
-            }, {
-                total: model.areaCountList.length, // length of data
-                getData: function($defer, params) {
-                    $defer.resolve(tableSlice(model.areaCountList, params));
-                }
+              var tableParams = 
+                new ngTableParams({
+                    page: 1,            // show first page
+                    count:10           // count per page
+                }, {
+                    total: model.areaCountList.length, // length of data
+                    getData: function($defer, params) {
+                        $defer.resolve(tableSlice(model.areaCountList, params));
+                    }
+                });
+
+              angular.extend($scope, {
+                model: model,
+                tableParams: tableParams,
+                xFunction: xFunction,
+                yFunction: yFunction,
+                descriptionFunction: descriptionFunction
+              });
+
+
+            })
+            .catch(function(reason) {
+                console.error('getCountByArea error:', reason);
+            })
+            .finally(function() {
+                console.log("finally finished getCountByArea");
             });
-
-          angular.extend($scope, {
-            model: model,
-            tableParams: tableParams,
-            xFunction: xFunction,
-            yFunction: yFunction,
-            descriptionFunction: descriptionFunction
-          });
-
-
-        });
     };
 
     initialize();

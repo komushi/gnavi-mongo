@@ -34,7 +34,7 @@ angular.module('gnaviApp').
       var jsonParam = {areaList: selectedObjList(pAreaList), catList: selectedObjList(pCatList)};
 
       gnaviAPIservice.getCountByCatArea(jsonParam)
-        .success(function(response) {
+        .then(function(response) {
 
           if (clearFlg) 
           {
@@ -45,6 +45,12 @@ angular.module('gnaviApp').
             model.chartData.push(response[0]);  
           }
           
+        })
+        .catch(function(reason) {
+            console.error('getCountByCatArea error:', reason);
+        })
+        .finally(function() {
+            console.log("finally finished getCountByCatArea");
         });
     };
 
@@ -78,50 +84,64 @@ angular.module('gnaviApp').
     var initialize = function () {
       console.log("catsAreasController initialize");
 
-      gnaviAPIservice.getGnaviCats().success(function(response) {
-        
-        catList = response.category_l;
-
-        var tableParams = 
-          new ngTableParams({
-              page: 1,            // show first page
-              count:10           // count per page
-          }, {
-              total: catList.length, // length of data
-              getData: function($defer, params) {
-                  $defer.resolve(tableSlice(catList, params));
-              }
-          });
-
-        angular.extend($scope, {
-          tableCatParams: tableParams
-        });
-
-      });
-
-      gnaviAPIservice.getGnaviAreas().success(function(response) {
-        
-          // var data = response.area;
-          areaList = response.area;
-          areaList.forEach(function (obj, i) {
-            obj.$selected = true;
-          });
+      gnaviAPIservice.getGnaviCats()
+        .then(function(response) {
+          
+          catList = response.category_l;
 
           var tableParams = 
             new ngTableParams({
                 page: 1,            // show first page
                 count:10           // count per page
             }, {
-                total: areaList.length, // length of data
+                total: catList.length, // length of data
                 getData: function($defer, params) {
-                    $defer.resolve(tableSlice(areaList, params));
+                    $defer.resolve(tableSlice(catList, params));
                 }
             });
 
           angular.extend($scope, {
-            tableAreaParams: tableParams
+            tableCatParams: tableParams
           });
-      });
+
+        })
+        .catch(function(reason) {
+            console.error('getGnaviCats error:', reason);
+        })
+        .finally(function() {
+            console.log("finally finished getGnaviCats");
+        });
+
+      gnaviAPIservice.getGnaviAreas()
+        .then(function(response) {
+          
+            // var data = response.area;
+            areaList = response.area;
+            areaList.forEach(function (obj, i) {
+              obj.$selected = true;
+            });
+
+            var tableParams = 
+              new ngTableParams({
+                  page: 1,            // show first page
+                  count:10           // count per page
+              }, {
+                  total: areaList.length, // length of data
+                  getData: function($defer, params) {
+                      $defer.resolve(tableSlice(areaList, params));
+                  }
+              });
+
+            angular.extend($scope, {
+              tableAreaParams: tableParams
+            });
+        })
+        .catch(function(reason) {
+            console.error('getGnaviAreas error:', reason);
+        })
+        .finally(function() {
+            console.log("finally finished getGnaviAreas");
+        });
 
 
       angular.extend($scope, {
