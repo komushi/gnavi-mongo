@@ -13,8 +13,8 @@ var router = express.Router();
 /* REST API hello */
 router.route('/api')
   .get(function (req, res) {
-   res.send('REST API is running.');
-   console.log("REST API is running.");
+  res.send({routes: jsonmask(router.stack,"path,route/stack/method)") });
+  console.log("REST API is running.");
 });
 /* REST API hello */
 /**************************/
