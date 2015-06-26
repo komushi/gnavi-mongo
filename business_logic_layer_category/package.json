@@ -9,6 +9,7 @@
     "mongojs": "~0.18.0",
     "q":"1.1.x",
     "cfenv":"1.0.x",
+    "json-mask": "^0.3.4",
     "body-parser":"1.10.x"
   },
   "scripts": {

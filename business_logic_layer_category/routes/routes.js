@@ -1,4 +1,5 @@
 var express = require("express");
+var jsonmask = require("json-mask");
 var catsController = require("../controllers/catsController");
 var countByCatController = require("../controllers/countByCatController");
 var countByCatAreaController = require("../controllers/countByCatAreaController");
@@ -12,7 +13,7 @@ var router = express.Router();
 /* REST API hello */
 router.route('/api')
   .get(function (req, res) {
-  res.send({routes: jsonmask(router.stack,"path,route/stack/method)") });
+  res.send({routes: jsonmask(router.stack,"route/(path,stack/method)") });
   console.log("REST API is running.");
 });
 /* REST API hello */
