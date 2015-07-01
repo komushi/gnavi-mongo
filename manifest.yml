@@ -6,26 +6,27 @@ applications:
   host: gnavi-msa-bl-category
   path: business_logic_layer_category/
   services:
-    - mongotest
+    - gnavi_mongo
 - name: gnavi-msa-bl-area
   memory: 128M
   instances: 1
   host: gnavi-msa-bl-area
   path: business_logic_layer_area/
   services:
-    - mongotest
+    - gnavi_mongo
 - name: gnavi-msa-bl-index
   memory: 64M
   instances: 1
   host: gnavi-msa-bl-index
   path: business_logic_layer_index/
   services:
-    - mongotest
+    - gnavi_mongo
 - name: gnavi-msa-pl
   memory: 64M
   instances: 2
   host: gnavi-msa-pl
   path: presentation_layer/
+  buildpack: staticfile_buildpack
   env:
     BusinessLogicURI: http://gnavi-msa-bl.kolsch.mini.pez.pivotal.io
     

@@ -3,9 +3,9 @@ var gnaviAPIservice = function($injectHttp, $q) {
     $http = $injectHttp;
 
     var gnaviAPI = {};
-    var areaServiceURI = "http://gnavi-msa-bl-area.kolsch.mini.pez.pivotal.io";
-    var catServiceURI = "http://gnavi-msa-bl-category.kolsch.mini.pez.pivotal.io";
-    var indexServiceURI = "http://gnavi-msa-bl-index.kolsch.mini.pez.pivotal.io";
+    var areaServiceURI = "http://gnavi-msa-bl-area.cfapps.io";
+    var catServiceURI = "http://gnavi-msa-bl-category.cfapps.io";
+    var indexServiceURI = "http://gnavi-msa-bl-index.cfapps.io";
 
     gnaviAPI.getGnaviPrefs = function() {
       var deferred = $q.defer();

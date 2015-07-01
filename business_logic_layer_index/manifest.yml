@@ -5,4 +5,4 @@ applications:
   instances: 1
   host: gnavi-msa-bl-index
   services:
-    - mongotest
+    - gnavi_mongo
