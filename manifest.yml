@@ -27,6 +27,5 @@ applications:
   host: gnavi-msa-pl
   path: presentation_layer/
   buildpack: staticfile_buildpack
-  env:
-    BusinessLogicURI: http://gnavi-msa-bl.kolsch.mini.pez.pivotal.io
+
     
