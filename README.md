@@ -28,7 +28,7 @@ Live Demo
 ----------
 Deployment to Cloud Foundry
 -------------
-Create a mongodb service on your Cloud Foundry space.
+Create a mongodb service 'gnavi_mongo' on your Cloud Foundry space.
 For Data Crawler:
 https://github.com/komushi/mongojs-gnavi
 
