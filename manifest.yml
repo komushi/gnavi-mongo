@@ -1,17 +1,17 @@
 ---
 applications:
-- name: gnavi-msa-bl-category
-  memory: 128M
-  instances: 1
-  host: gnavi-msa-bl-category
-  path: business_logic_layer_category/
-  services:
-    - gnavi_mongo
 - name: gnavi-msa-bl-area
   memory: 128M
   instances: 1
   host: gnavi-msa-bl-area
   path: business_logic_layer_area/
+  services:
+    - gnavi_mongo
+- name: gnavi-msa-bl-category
+  memory: 128M
+  instances: 1
+  host: gnavi-msa-bl-category
+  path: business_logic_layer_category/
   services:
     - gnavi_mongo
 - name: gnavi-msa-bl-index
