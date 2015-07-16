@@ -7,7 +7,7 @@ Overview
 Presentation layer using AngularJS MVW framework for Web UI.
 
 -------------
-Preparation
+Notice
 -------------
 Because there is no Service Registry applied, you need to edit the presentation_layer/js/services/services.js file.
 
@@ -22,6 +22,7 @@ Deployment to Cloud Foundry
 -------------
 bower install dependencies:
 ```
+cd ./presentation_layer/
 bower install
 ```
 
@@ -34,17 +35,4 @@ cf push
 You can access your app at 
 ```
 http://gnavi-msa-pl.<your_cf_domain>
-```
-
--------------
-Local Test
--------------
-npm install dependencies:
-```
-npm start
-```
-
-You can access your app at 
-```
-http://localhost:8000
 ```

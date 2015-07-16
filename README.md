@@ -1,4 +1,4 @@
-Welcome to gnavi-mongo demo!
+Welcome to gnavi-mongo demo(Microservices Architecture)!
 ===================
 
 Overview
@@ -14,56 +14,34 @@ This is a 3-tier SPA or Single Page Application demo which is hosted on [Pivotal
 ----------
 Architecture
 -------------
-###Node.js
-![3-tier](https://raw.githubusercontent.com/komushi/gnavi-mongo/master/images/architecture.png)
+###Monolithic Architecuture
+![3-tier](https://raw.githubusercontent.com/komushi/gnavi-mongo/msa/images/Slide1.png)
 
-###With Cloud Foundry
-![Scaling the app](https://raw.githubusercontent.com/komushi/gnavi-mongo/master/images/cf.png)
+###Microservices Architecture
+![Scaling the app](https://raw.githubusercontent.com/komushi/gnavi-mongo/msa/images/Slide2.png)
 
 ----------
 Live Demo
 -------------
-[Application on PWS](http://gnavi-mongo.cfapps.io/)
+[Application on PWS](http://gnavi-msa-pl.cfapps.io/)
 
-
-----------
-Getting started on your laptop
--------------
-
-All you need to do is to clone this repository,
-```
-git clone https://github.com/komushi/gnavi-mongo
-cd gnavi-mongo
-```
-
-Remeber to install [node.js and npm](http://nodejs.org/) and then [bower](http://bower.io/) first.
-Then, install the dependencies:
-```
-npm install
-```
-
-Then, run the Application:
-```
-npm start
-```
-
-You can access your app at 
-```
-http://localhost:9000/
-```
 ----------
 Deployment to Cloud Foundry
 -------------
+Create a mongodb service on your Cloud Foundry space.
+For Data Crawler:
+https://github.com/komushi/mongojs-gnavi
+
 git clone this repository,
 ```
 git clone https://github.com/komushi/gnavi-mongo
-cd gnavi-mongo
+cd ./gnavi-mongo
 git checkout -b msa origin/msa
 ```
 
 bower install dependencies:
 ```
-cd presentation_layer
+cd ./presentation_layer
 bower install
 ```
 
