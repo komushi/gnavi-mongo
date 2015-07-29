@@ -1,0 +1,8 @@
+---
+applications:
+- name: gnavi-msa-pl
+  memory: 64M
+  instances: 2
+  host: gnavi-msa-pl
+  buildpack: staticfile_buildpack
+    

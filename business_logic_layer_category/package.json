@@ -1,0 +1,19 @@
+{
+  "name": "gnavi-msa-bl-category",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Analytics for public Rest data source",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.0.0",
+    "q":"1.1.x",
+    "mongojs": "~0.18.0",
+    "cfenv":"1.0.x",
+    "json-mask": "^0.3.4",
+    "body-parser":"1.10.x"
+  },
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node app.js"
+  }
+}

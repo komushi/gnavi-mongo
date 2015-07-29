@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p><strong>Page:</strong> {{tableCatParams.page()}}</p>
+        <p><strong>Count per page:</strong> {{tableCatParams.count()}}</p>
+        
+        <table ng-table="tableCatParams" class="table ng-table-rowselected">
+        <tr ng-repeat="cat in $data"
+            ng-click="cat.$selected = !cat.$selected; changeSelectionCat(cat, cat.$selected)"
+            ng-class="{'active': cat.$selected}">
+            <td data-title="'Code'">{{cat.category_l_code}}</td>
+            <td data-title="'Name'">{{cat.category_l_name}}</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p><strong>Page:</strong> {{tableAreaParams.page()}}</p>
+        <p><strong>Count per page:</strong> {{tableAreaParams.count()}}</p>
+        
+        <table ng-table="tableAreaParams" class="table ng-table-rowselected">
+        <tr ng-repeat="area in $data"
+            ng-click="area.$selected = !area.$selected; changeSelectionArea(area, area.$selected)"
+            ng-class="{'active': area.$selected}">
+            <td data-title="'Code'">{{area.area_code}}</td>
+            <td data-title="'Name'">{{area.area_name}}</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p><strong>カテゴリ別</strong></p>
+        <div class="pull-right">
+            <nvd3-multi-bar-chart
+                data="model.chartData"
+                id="pushChartId"
+                width="1000"
+                height="550"
+                labelType="key"
+                tooltips="true"
+                objectequality="true"
+                showLegend="true"
+                showXAxis="true"
+                showYAxis="true">
+                    <svg></svg>
+            </nvd3-multi-bar-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
