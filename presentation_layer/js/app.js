@@ -7,9 +7,6 @@ var app =  angular.module('gnaviApp', [
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
-	// $locationProvider.html5Mode(true);
-	// $locationProvider.hashPrefix = '#';
-
 	$routeProvider.
 		when("/", {redirectTo: '/prefs'}).
 		when("/prefs", {templateUrl: "views/prefs.html", controller: "prefsController"}).

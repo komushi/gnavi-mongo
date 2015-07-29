@@ -27,5 +27,3 @@ applications:
   host: gnavi-msa-pl
   path: presentation_layer/
   buildpack: staticfile_buildpack
-
-    
